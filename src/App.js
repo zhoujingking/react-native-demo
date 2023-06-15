@@ -7,31 +7,32 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 const WIDTH = Dimensions.get('window').width;
 
 function App(props) {
+  const bgs = ['blue', 'red', 'purple', 'yellow', 'green', 'cyan', 'grey']
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <ScrollView style={{
+        <View style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          rowGap: 10,
+          columnGap: 10,
+          padding: 4,
           backgroundColor: '#F4F5F6'
-        }}
-          horizontal={true}
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          <View style={{
-            flexDirection: 'row'
-          }}>
-            <View style={{
-              width: WIDTH,
-              height: 500,
-              backgroundColor: 'red'
-            }}></View>
-            <View style={{
-              width: WIDTH,
-              height: 500,
-              backgroundColor: 'purple'
-            }}></View>
-          </View>
-        </ScrollView>
+        }}>
+          {
+            bgs.map((color, index) => (
+              <View key={index} style={{
+                width: 150,
+                height: 50,
+                backgroundColor: color,
+              }}>
+                <Text style={{
+                  color: 'black'
+                }}>{color}</Text>
+              </View>
+            ))
+          }
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
