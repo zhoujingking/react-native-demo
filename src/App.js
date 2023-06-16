@@ -1,38 +1,52 @@
-import React from 'react';
-import { Dimensions, ScrollView, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Dimensions, ScrollView, Text, View } from 'react-native';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import AnimationMovement from './animation/move';
+import AnimationRotation from './animation/rotate';
 
-const WIDTH = Dimensions.get('window').width;
+const FadeView = props => {
+  const fadeValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeValue, {
+      toValue: 1,
+      duration: 10000,
+      useNativeDriver: true
+    }).start();
+  }, [fadeValue]);
+
+  return (
+    <Animated.View style={{
+      opacity: fadeValue
+    }}>
+      {
+        props.children
+      }
+    </Animated.View>
+  )
+};
 
 function App(props) {
-  const bgs = ['blue', 'red', 'purple', 'yellow', 'green', 'cyan', 'grey']
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
-        <View style={{
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          rowGap: 10,
-          columnGap: 10,
-          padding: 4,
-          backgroundColor: '#F4F5F6'
+      <SafeAreaView style={{
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center'
+      }}>
+        <AnimationMovement>
+        </AnimationMovement>
+        <AnimationRotation style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'yellow'
         }}>
-          {
-            bgs.map((color, index) => (
-              <View key={index} style={{
-                width: 150,
-                height: 50,
-                backgroundColor: color,
-              }}>
-                <Text style={{
-                  color: 'black'
-                }}>{color}</Text>
-              </View>
-            ))
-          }
-        </View>
+          <Text style={{
+            backgroundColor: 'red'
+          }}>GODKING</Text>
+        </AnimationRotation>
       </SafeAreaView>
     </SafeAreaProvider>
   );
