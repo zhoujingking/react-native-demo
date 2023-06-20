@@ -2,96 +2,97 @@ import React, { forwardRef, useEffect, useRef } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated';
 
-import { Circle, Svg } from 'react-native-svg';
+import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
 
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+const TapCircle = props => {
+  const pressed = useSharedValue(false);
 
-function CircleTest() {
-  const sv = useSharedValue('5%');
-
-  useEffect(() => {
-    sv.value = withRepeat(withTiming('50%', {
-      duration: 5000
-    }), -1, true);
-  }, []);
-
-  return (
-    <Svg height="200" width="200" style={{backgroundColor: 'cyan'}}>
-      <AnimatedCircle cx="50%" cy="50%" fill="purple" r={sv} />
-    </Svg>
-  );
-}
-
-function App(props) {
-  const angle = useSharedValue(0);
-  const offset = useSharedValue(0);
-  const sprinOffset = useSharedValue(-100);
-  const rotateAniStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          rotate: `${angle.value}deg`
-        }
-      ]
+  const eventHandler = useAnimatedGestureHandler({
+    onStart: (event, ctx) => {
+      console.log(event, ctx);
+      pressed.value = true;
+    },
+    onEnd: (event, ctx) => {
+      console.log(event, ctx);
+      pressed.value = false;
     }
   });
 
-  const moveAniStyle = useAnimatedStyle(() => {
+  const boxAniStyle = useAnimatedStyle(() => {
     return {
+      backgroundColor: pressed.value ? '#2A66F6' : 'purple',
       transform: [
         {
-          translateX: offset.value
-        }
-      ]
-    }
-  });
-
-  const sprinAniStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: sprinOffset.value
+          scale: withSpring(pressed.value ? 1.5 : 1)
         }
       ]
     }
   })
+  return (
+    <TapGestureHandler onGestureEvent={eventHandler}>
+      <Animated.View style={[styles.box, boxAniStyle]}>
 
-  useEffect(() => {
-    angle.value = withRepeat(withTiming(720, {
-      duration: 5000,
-      easing: Easing.circle
-    }), -1, false);
+      </Animated.View>
+    </TapGestureHandler>
+  )
+}
 
-    offset.value = withRepeat(withSequence(
-      withTiming(-100, {
-        duration: 1000
-      }),
-      withTiming(100, {
-        duration: 1000
-      }),
-    ), -1, true);
+const MoveCircle = props => {
+  const initPosition = 0;
+  const xOffset = useSharedValue(initPosition);
+  const yOffset = useSharedValue(initPosition);
 
-    sprinOffset.value = withRepeat(
-      withSpring(100)
-      , -1, true)
-  }, []);
+  const eventHandler = useAnimatedGestureHandler({
+    onStart: (event, ctx) => {
+      console.log(event, ctx);
+    },
+    onEnd: (event, ctx) => {
+      console.log(event, ctx);
+      xOffset.value = withSpring(initPosition);
+      yOffset.value = withSpring(initPosition);
+    },
+    onActive: (event, ctx) => {
+      xOffset.value = initPosition + event.translationX;
+      yOffset.value = initPosition + event.translationY;
+    }
+  });
+
+  const boxAniStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'purple',
+      transform: [
+        {
+          translateX: xOffset.value
+        },
+        {
+          translateY: yOffset.value
+        }
+      ]
+    }
+  })
+  return (
+    <PanGestureHandler onGestureEvent={eventHandler}>
+      <Animated.View style={[styles.box, boxAniStyle]}>
+
+      </Animated.View>
+    </PanGestureHandler>
+  )
+}
+
+function App(props) {
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        rowGap: 20
-      }}>
-        <Animated.View style={[styles.box, rotateAniStyle]}></Animated.View>
-        <Animated.View style={[styles.box, moveAniStyle]}></Animated.View>
-        <Animated.View style={[styles.box, sprinAniStyle]}></Animated.View>
-        <CircleTest />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      rowGap: 20
+    }}>
+      <TapCircle />
+      <MoveCircle />
+    </GestureHandlerRootView>
   );
 }
 
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   box: {
     width: 50,
     height: 50,
-    backgroundColor: '#2A66F6'
+    borderRadius: 50,
   }
 })
 

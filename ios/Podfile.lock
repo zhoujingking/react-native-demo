@@ -771,6 +771,14 @@ PODS:
     - React-jsi (= 0.71.10)
     - React-logger (= 0.71.10)
     - React-perflogger (= 0.71.10)
+  - RNGestureHandler (2.12.0):
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React
+    - React-Codegen
+    - React-RCTFabric
+    - ReactCommon/turbomodule/core
   - RNReanimated (3.0.0):
     - DoubleConversion
     - FBLazyVector
@@ -887,6 +895,7 @@ DEPENDENCIES:
   - React-rncore (from `../node_modules/react-native/ReactCommon`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -986,6 +995,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNSVG:
@@ -1045,6 +1056,7 @@ SPEC CHECKSUMS:
   React-rncore: 0ed130c0a368c85d94e4941e675428effb8358e9
   React-runtimeexecutor: a9a1cd79996c9a0846e3232ecb25c64e1cc0172e
   ReactCommon: 65718685d4095d06b4b1af8042e12f1df2925c31
+  RNGestureHandler: d8224aad6d7081834ae6e6cf925397059485b69e
   RNReanimated: a318e90c84206fbf6ef10eefc50c4ef5289d206d
   RNSVG: a9204714b832d82b483b0cbaee9e675646426b8d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
