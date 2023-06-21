@@ -808,23 +808,8 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (13.9.0):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
+  - RNSVG (12.1.1):
     - React
-    - React-Codegen
-    - React-RCTFabric
-    - ReactCommon/turbomodule/core
-    - RNSVG/common (= 13.9.0)
-  - RNSVG/common (13.9.0):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React
-    - React-Codegen
-    - React-RCTFabric
-    - ReactCommon/turbomodule/core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -1058,7 +1043,7 @@ SPEC CHECKSUMS:
   ReactCommon: 65718685d4095d06b4b1af8042e12f1df2925c31
   RNGestureHandler: d8224aad6d7081834ae6e6cf925397059485b69e
   RNReanimated: a318e90c84206fbf6ef10eefc50c4ef5289d206d
-  RNSVG: a9204714b832d82b483b0cbaee9e675646426b8d
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: e7ea9e590e27460d28911403b894722354d73479
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
